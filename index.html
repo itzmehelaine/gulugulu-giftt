@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Birthday Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffe6f0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .tulips {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: url('https://i.imgur.com/6Q8Kzian.png') repeat-x bottom;
+            background-size: contain;
+            z-index: 1;
+        }
+        .quiz-box {
+            background-color: white;
+            border: 2px solid #ff99cc;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .quiz-box::after {
+            content: '🎀';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+        .question {
+            color: #89cff0;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .small-text {
+            font-size: 14px;
+        }
+        .button {
+            background-color: #89cff0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+        .button:hover {
+            background-color: #66b2ff;
+        }
+        .option-button {
+            background-color: #89cff0;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+        }
+        .option-button:hover {
+            background-color: #66b2ff;
+        }
+        .pink-box {
+            background-color: #ffe6f0;
+            border: 2px solid #ff99cc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .fancy-border {
+            border: 3px double #660033;
+        }
+        a {
+            color: #ff99cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="tulips"></div>
+    <div id="quiz-container" class="quiz-box">
+        <div id="question" class="question">start?</div>
+        <button id="start-button" class="button">yes</button>
+    </div>
+
+    <script>
+        const states = [
+            {
+                question: "start?",
+                buttons: [{ text: "yes", next: 1 }],
+            },
+            {
+                question: "what day is it today?",
+                buttons: [
+                    { text: "my birthday!!", next: 2 },
+                    { text: "october 5th.", next: 3 },
+                ],
+            },
+            {
+                question: "ARE U EXCITED KUNHAVE?",
+                buttons: [{ text: "continue", next: 4 }],
+            },
+            {
+                question: "you seem grumpy",
+                buttons: [{ text: "continue", next: 4 }],
+            },
+            {
+                question: "i still wanna be your favouritee girlllll i wanna be the one that makes _____",
+                buttons: [
+                    { text: "your day", next: 5 },
+                    { text: "you laugh", next: 6 },
+                ],
+            },
+            {
+                question: "good boyyy",
+                buttons: [{ text: "continue", next: 7 }],
+            },
+            {
+                question: "oop that's wrong twin!! but its your birthday so i'll let it slide",
+                buttons: [{ text: "continue", next: 7 }],
+            },
+            {
+                question: "lemme compliment you a bit JUST BECAUSE it's your birthday",
+                buttons: [{ text: "ok....?", next: 8 }],
+            },
+            {
+                question: "JUST KIDDING you deserve to be complimented everyday<3",
+                buttons: [
+                    { text: "ew.", next: 9 },
+                    { text: "YES", next: 10 },
+                ],
+            },
+            {
+                question: "ok bitch.",
+                buttons: [{ text: "continue", next: 11 }],
+            },
+            {
+                question: "TIME FOR ME TO SPIT FACTS!!",
+                buttons: [{ text: "continue", next: 11 }],
+            },
+            {
+                question: `let me explain. i don't think this single slide can occupy all i want to say but i will try. i love your personality i know i always say that you are mean and dry but i don't hate you for it cause i understand people are different. but aside from dry texts you are funny and so cool you have the humor, and you have your personality. i have never met someone like you in my life and i don't think i will. you are soo special and today is a special day and you should feel loved and cared for. you are so admirable. you can sing, play the guitar which is soo cool. your voice is my top favourite thing about you. i love hearing you sing. i remember the time when i asked you to sing and you were nervous but now, your random singing voice notes makes me so happy. i don't have to ask for it. i don't think you'll ever know how much i admire you. when we call i'm so happy and my mood becomes 10 times better that just explains how you make me feel. you make me happy. (most of the times ahem ahem.) when i say "i'll be right back" and you start singing, i hear it. and i love it each time. when that one time you sang on call when i asked you to was so good like your voice just melts me each time. i would never understand how you say "i'm insecure" like how. your eyes are prettier than any flower i have seen. your smile is sweeter than any cake i know. and your voice is so much more mesmerizing than my favorite song. in fact my favorite song might be your voice at this point. and your hair. do i have to say something? it's so pretty (lowkey jealous). you are so pretty. like sooo sooo pretty. i don't know how to explain it but you are adorable af. you look good in everything every color you wear YOU make it pretty. i love listening to you talk, sing, laugh everything. i loveeee your laugh it makes me smile i swear. i hope you stay happy every day and every moment. and i hope you'll be loved and cared for all your life. you turning 18 by the way uncle. don't touch minors. UR SO COOOL UGHHH I WANNA SAY MORE BUT I'LL STOP HERE.`,
+                style: { backgroundColor: "white", color: "#660033", fontFamily: "'Times New Roman', Times, serif" },
+                buttons: [{ text: "next?", next: 12 }],
+                questionClass: "small-text"
+            },
+            {
+                question: `a playlist for YOUUU\n\n[Spotify Playlist](https://open.spotify.com/playlist/3EkmLmRHFv7Xgyfymfp723?si=b75a5347333c4dfc&pt=afc98bfa3579f39ac099c1596e340c14)`,
+                buttons: [{ text: "ok", next: 13 }],
+                boxStyle: "pink-box"
+            },
+            {
+                question: "thats it i uh don't know how to code so... i used ai BUT THE PROMPT TOOK SO LONG hope you liked it hehe :3",
+                buttons: [],
+                boxStyle: "pink-box"
+            }
+        ];
+
+        let currentState = 0;
+
+        function renderState() {
+            const state = states[currentState];
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            container.className = `quiz-box ${state.boxStyle || ''} ${state.style && state.style.backgroundColor === 'white' ? 'fancy-border' : ''}`;
+            if (state.style) {
+                Object.assign(container.style, state.style);
+            }
+
+            const questionEl = document.createElement('div');
+            questionEl.className = `question ${state.questionClass || ''}`;
+            if (state.question.includes('[Spotify Playlist]')) {
+                const [text, link] = state.question.split('\n\n[Spotify Playlist]');
+                questionEl.innerText = text;
+                const linkEl = document.createElement('a');
+                linkEl.href = link.slice(1, -1);
+                linkEl.innerText = 'Listen here!';
+                linkEl.className = 'pink-box';
+                questionEl.appendChild(document.createElement('br'));
+                questionEl.appendChild(document.createElement('br'));
+                questionEl.appendChild(linkEl);
+            } else {
+                questionEl.innerText = state.question;
+            }
+            container.appendChild(questionEl);
+
+            state.buttons.forEach(button => {
+                const btnEl = document.createElement('button');
+                btnEl.className = 'button option-button';
+                btnEl.innerText = button.text;
+                btnEl.onclick = () => {
+                    currentState = button.next;
+                    renderState();
+                };
+                container.appendChild(btnEl);
+            });
+
+            if (state.buttons.length === 1) {
+                container.className += ' single-button';
+            }
+        }
+
+        document.getElementById('start-button').onclick = () => {
+            currentState = 1;
+            renderState();
+        };
+
+        renderState();
+    </script>
+</body>
+</html>
